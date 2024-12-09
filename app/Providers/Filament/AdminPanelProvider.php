@@ -21,6 +21,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Auth\Login;
+use App\Http\Middleware\RedirectIfNotAdmin;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -33,20 +34,23 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->passwordReset()
+            ->login(Login::class)
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::Teal,
             ])
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->sidebarCollapsibleOnDesktop()
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            // ->brandLogo(asset('lambang.png'))
+            // ->brandLogo(asset('logo.jpg'))
             ->brandLogoHeight('3rem')
-            ->favicon(asset('lambang.png'))
+            ->brandName('Puskesmas Batusura')
+            ->favicon(asset('logo.jpg'))
             ->font('Poppins')
             ->darkMode(false)
             ->userMenuItems([
@@ -58,7 +62,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()
@@ -90,6 +94,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                RedirectIfNotAdmin::class
             ]); // Menyertakan view custom header;
     }
 }

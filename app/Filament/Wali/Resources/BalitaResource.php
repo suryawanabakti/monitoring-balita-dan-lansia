@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Wali\Resources;
 
-use App\Filament\Resources\BalitaResource\Pages;
+use App\Filament\Wali\Resources\BalitaResource\Pages;
+use App\Filament\Wali\Resources\BalitaResource\RelationManagers;
 use App\Models\Balita;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Model;
 
 class BalitaResource extends Resource
 {
     protected static ?string $model = Balita::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
-    protected static ?string $navigationGroup = 'MANAGEMENT';
+    protected static ?string $navigationGroup = 'Master Data';
     protected static ?string $navigationLabel = 'Balita';
-
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['nama', 'nib', 'nama_orangtua'];
-    }
 
     public static function getModelLabel(): string
     {
@@ -37,9 +37,13 @@ class BalitaResource extends Resource
         return 'Balita'; // Customize the plural label
     }
 
-    public static function getNavigationBadge(): ?string
+    public static function canEdit(Model $record): bool
     {
-        return static::getModel()::count();
+        return false;
+    }
+    public static function canCreate(): bool
+    {
+        return false;
     }
 
     public static function form(Form $form): Form
@@ -67,6 +71,7 @@ class BalitaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            // ->query()
             ->columns([
                 TextColumn::make('nama')
                     ->label('Nama')
@@ -81,8 +86,7 @@ class BalitaResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([

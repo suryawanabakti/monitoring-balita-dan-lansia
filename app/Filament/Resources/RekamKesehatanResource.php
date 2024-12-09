@@ -26,6 +26,18 @@ class RekamKesehatanResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-folder';
     protected static ?string $navigationGroup = 'Main';
     protected static ?string $navigationLabel = 'Rekam Kesehatan';
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    public static function getModelLabel(): string
+    {
+        return 'Rekam Kesehatan';
+    }
+    public static function getPluralModelLabel(): string
+    {
+        return 'Rekam Kesehatan'; // Customize the plural label
+    }
 
     public static function form(Form $form): Form
     {

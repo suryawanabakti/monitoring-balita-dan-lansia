@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Pimpinan\Resources;
 
-use App\Filament\Resources\LaporanResource\Pages;
-use App\Filament\Resources\LaporanResource\RelationManagers;
+use App\Filament\Pimpinan\Resources\LaporanResource\Pages;
+use App\Filament\Pimpinan\Resources\LaporanResource\RelationManagers;
 use App\Models\Laporan;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -32,6 +32,13 @@ class LaporanResource extends Resource
     {
         return 'Laporan'; // Customize the plural label
     }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -49,8 +56,8 @@ class LaporanResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('periode'),
-                TextColumn::make('jenis_laporan'),
+                TextColumn::make('periode')->searchable(),
+                TextColumn::make('jenis_laporan')->searchable(),
                 TextColumn::make('file_laporan')
                     ->label('File')
                     ->formatStateUsing(function ($state) {
@@ -67,14 +74,8 @@ class LaporanResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array

@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Wali\Resources;
 
-use App\Filament\Resources\JadwalPosyanduResource\Pages;
-use App\Filament\Resources\JadwalPosyanduResource\RelationManagers;
+use App\Filament\Wali\Resources\JadwalPosyanduResource\Pages;
+use App\Filament\Wali\Resources\JadwalPosyanduResource\RelationManagers;
 use App\Models\JadwalPosyandu;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 
 class JadwalPosyanduResource extends Resource
 {
@@ -41,27 +41,32 @@ class JadwalPosyanduResource extends Resource
                 Textarea::make('keterangan'),
             ]);
     }
-
+    public  static function canEdit(Model $record): bool
+    {
+        return false;
+    }
+    public  static function canDelete(Model $record): bool
+    {
+        return false;
+    }
+    public static function canCreate(): bool
+    {
+        return false;
+    }
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('tgl_kegiatan'),
-                TextColumn::make('lokasi'),
+                TextColumn::make('lokasi')->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array

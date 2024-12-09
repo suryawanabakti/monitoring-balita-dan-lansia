@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Wali\Resources;
 
-use App\Filament\Resources\LansiaResource\Pages;
-use App\Filament\Resources\LansiaResource\RelationManagers;
+use App\Filament\Wali\Resources\LansiaResource\Pages;
+use App\Filament\Wali\Resources\LansiaResource\RelationManagers;
 use App\Models\Lansia;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class LansiaResource extends Resource
@@ -26,24 +25,20 @@ class LansiaResource extends Resource
     protected static ?string $model = Lansia::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
-    protected static ?string $navigationGroup = 'MANAGEMENT';
+    protected static ?string $navigationGroup = 'Master Data';
     protected static ?string $navigationLabel = 'Lansia';
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['nama', 'nik'];
-    }
-    public static function getModelLabel(): string
-    {
-        return 'Lansia';
-    }
     public static function getPluralModelLabel(): string
     {
         return 'Lansia'; // Customize the plural label
+    }
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+    public static function canEdit(Model $record): bool
+    {
+        return false;
     }
     public static function form(Form $form): Form
     {
@@ -77,17 +72,13 @@ class LansiaResource extends Resource
                 TextColumn::make('jk'),
                 TextColumn::make('tgl_lahir'),
             ])
-            ->filters([])
+            ->filters([
+                //
+            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ViewAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
