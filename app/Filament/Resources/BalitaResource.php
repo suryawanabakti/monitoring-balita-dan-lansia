@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BalitaResource\Pages;
+use App\Filament\Resources\BalitaResource\RelationManagers\RekamkesehatanRelationManager;
 use App\Models\Balita;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
@@ -57,6 +58,7 @@ class BalitaResource extends Resource
                         ])->inline()->inlineLabel(false)->required(),
                         TextInput::make('nama_orangtua')->required(),
                         Textarea::make('alamat')->required(),
+                        TextInput::make('nohp')->nullable(),
                         TextInput::make('panjang')->numeric()->required(),
                         TextInput::make('berat')->numeric()->required(),
                         TextInput::make('lingkar_kepala')->numeric()->required(),
@@ -95,7 +97,7 @@ class BalitaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RekamkesehatanRelationManager::class
         ];
     }
 

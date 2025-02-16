@@ -1,7 +1,12 @@
 <?php
 
 return [
-
+    'assets' => [
+        'css' => [
+            'http://puskesmasbatusura.test/css/filament-custom.css',
+            // atau path ke file CSS lokal Anda
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Broadcasting

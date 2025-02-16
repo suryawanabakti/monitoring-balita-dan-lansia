@@ -6,12 +6,16 @@ use Filament\Forms\Form;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Component;
 use Filament\Pages\Auth\Login as BaseAuth;
+use Filament\Panel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Validation\ValidationException;
 
 class Login extends BaseAuth
 {
+
+
     public function form(Form $form): Form
     {
         return $form
@@ -22,6 +26,7 @@ class Login extends BaseAuth
             ])
             ->statePath('data');
     }
+
     protected function getPasswordFormComponent(): Component
     {
         return TextInput::make('password')
@@ -34,6 +39,7 @@ class Login extends BaseAuth
             ->placeholder("Masukkan password anda")
             ->extraInputAttributes(['tabindex' => 2]);
     }
+
     protected function getLoginFormComponent(): Component
     {
         return TextInput::make('login')

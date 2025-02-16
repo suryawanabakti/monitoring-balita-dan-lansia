@@ -16,6 +16,7 @@ class CreateBalita extends CreateRecord
             'nomor' => $data['nib'],
             'nama' => $data['nama']
         ]);
+
         $data['pasien_id'] = $pasien->id;
         return $data;
     }

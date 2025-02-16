@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('jk', ['L', 'P']);
             $table->string('nama_orangtua');
             $table->string('alamat');
+            $table->string('nohp')->nullable();
             $table->integer('panjang');
             $table->integer('berat');
             $table->integer('lingkar_kepala');

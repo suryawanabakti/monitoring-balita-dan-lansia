@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\LansiaResource\Pages;
 use App\Filament\Resources\LansiaResource\RelationManagers;
+use App\Filament\Resources\LansiaResource\RelationManagers\RekamkesehatanRelationManager;
 use App\Models\Lansia;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -93,7 +94,7 @@ class LansiaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RekamkesehatanRelationManager::class
         ];
     }
 
