@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('rekam_kesehatan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pasien_id')->constrained('pasien')->cascadeOnDelete();
+            $table->foreignId('balita_id')->nullable()->constrained('balita')->nullOnDelete(); // balita or lansia
+            $table->foreignId('lansia_id')->nullable()->constrained('lansia')->nullOnDelete(); // balita or lansia
             $table->date('tgl_pemeriksaan');
             $table->float('berat_badan');
             $table->float('tinggi_badan');
             $table->float('tekanan_darah');
+            $table->float('lingkar_kepala');
             $table->text('catatan')->nullable();
             $table->timestamps();
         });

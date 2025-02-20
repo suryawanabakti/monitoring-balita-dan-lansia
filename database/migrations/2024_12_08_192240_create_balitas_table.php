@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('balita', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pasien_id')->constrained('pasien')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('nib');
             $table->string('nama');
             $table->enum('jk', ['L', 'P']);

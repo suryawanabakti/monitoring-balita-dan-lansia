@@ -21,6 +21,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Auth\Login;
+use App\Filament\Pages\LaporanBalita;
+use App\Filament\Pages\LaporanLansia;
 use App\Http\Middleware\RedirectIfNotAdmin;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
@@ -36,6 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->passwordReset()
             ->login(Login::class)
+            ->registration()
             ->colors([
                 'primary' => Color::Teal,
             ])
@@ -46,6 +49,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                LaporanBalita::class,
+                LaporanLansia::class
             ])
             // ->brandLogo(asset('logo.jpg'))
             ->brandLogoHeight('3rem')

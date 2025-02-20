@@ -11,6 +11,6 @@ class Balita extends Model
 
     public function rekamkesehatan()
     {
-        return $this->hasMany(RekamKesehatan::class, 'pasien_id', 'pasien_id');
+        return $this->hasMany(RekamKesehatan::class, 'balita_id', 'id');
     }
 }

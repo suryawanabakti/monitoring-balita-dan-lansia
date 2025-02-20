@@ -22,7 +22,7 @@ class JadwalPosyanduResource extends Resource
     protected static ?string $model = JadwalPosyandu::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
-    protected static ?string $navigationGroup = 'Main';
+    protected static ?string $navigationGroup = 'Fitur Lainnya';
     protected static ?string $navigationLabel = 'Jadwal Posyandu';
     public static function getModelLabel(): string
     {

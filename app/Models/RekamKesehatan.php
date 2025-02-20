@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class RekamKesehatan extends Model
 {
     protected $guarded = ['id'];
+
     public $table = 'rekam_kesehatan';
 
-    public function pasien()
+    public function balita()
     {
-        return $this->belongsTo(Pasien::class);
+        return $this->belongsTo(Balita::class);
+    }
+    public function lansia()
+    {
+        return $this->belongsTo(Lansia::class);
     }
 }

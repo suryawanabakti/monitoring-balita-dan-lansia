@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lansia', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pasien_id')->constrained('pasien')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('nik');
             $table->string('nama');
             $table->date('tgl_lahir');

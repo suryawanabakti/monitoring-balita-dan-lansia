@@ -23,6 +23,7 @@ class RekamkesehatanRelationManager extends RelationManager
                 Forms\Components\TextInput::make('berat_badan')->numeric()->required(),
                 Forms\Components\TextInput::make('tinggi_badan')->numeric()->required(),
                 Forms\Components\TextInput::make('tekanan_darah')->numeric()->required(),
+                Forms\Components\TextInput::make('lingkar_kepala')->numeric()->required(),
                 Forms\Components\TextArea::make('catatan'),
             ]);
     }
@@ -34,7 +35,9 @@ class RekamkesehatanRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('tgl_pemeriksaan'),
                 Tables\Columns\TextColumn::make('tinggi_badan'),
+                Tables\Columns\TextColumn::make('berat_badan'),
                 Tables\Columns\TextColumn::make('tekanan_darah'),
+                Tables\Columns\TextColumn::make('lingkar_kepala'),
                 Tables\Columns\TextColumn::make('catatan')->wrap(),
             ])
             ->filters([

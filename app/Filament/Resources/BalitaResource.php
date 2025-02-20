@@ -5,8 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BalitaResource\Pages;
 use App\Filament\Resources\BalitaResource\RelationManagers\RekamkesehatanRelationManager;
 use App\Models\Balita;
+use App\Models\User;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -50,6 +52,7 @@ class BalitaResource extends Resource
                 Section::make('Balita')
                     ->description('Lengkapi data balita di bawah ini')
                     ->schema([
+                        Select::make('user_id')->label('Wali')->options(User::where('role', 'wali')->pluck('name', 'id'))->required(),
                         TextInput::make('nib')->required(),
                         TextInput::make('nama')->required(),
                         Radio::make('jk')->label('Jenis Kelamin')->options([

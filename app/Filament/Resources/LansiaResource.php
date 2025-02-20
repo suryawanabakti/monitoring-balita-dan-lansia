@@ -6,6 +6,7 @@ use App\Filament\Resources\LansiaResource\Pages;
 use App\Filament\Resources\LansiaResource\RelationManagers;
 use App\Filament\Resources\LansiaResource\RelationManagers\RekamkesehatanRelationManager;
 use App\Models\Lansia;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Radio;
@@ -53,6 +54,7 @@ class LansiaResource extends Resource
                 Section::make('Lansia')
                     ->description('Lengkapi data lansia di bawah ini')
                     ->schema([
+                        Select::make('user_id')->label('Wali')->options(User::where('role', 'wali')->pluck('name', 'id'))->required(),
                         TextInput::make('nik')->required(),
                         TextInput::make('nama')->required(),
                         DatePicker::make('tgl_lahir')->required(),
