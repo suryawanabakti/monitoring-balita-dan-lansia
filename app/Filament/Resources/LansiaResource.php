@@ -64,8 +64,8 @@ class LansiaResource extends Resource
                         ])->inline()->inlineLabel(false)->required(),
                         Textarea::make('alamat')->required(),
                         Radio::make('status_keluarga')->label('Status Keluarga')->options([
-                            'test1' => 'Test 1',
-                            'test2' => 'Test 2',
+                            'suami' => 'Suami',
+                            'istri' => 'Istri',
                         ])->inline()->inlineLabel(false)->required(),
                     ])
             ]);

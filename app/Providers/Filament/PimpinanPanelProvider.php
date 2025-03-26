@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\Login;
+use App\Filament\Pages\LaporanBalita;
+use App\Filament\Pages\LaporanLansia;
 use App\Http\Middleware\RedirectIfNotPimpinan;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -37,6 +39,8 @@ class PimpinanPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pimpinan/Pages'), for: 'App\\Filament\\Pimpinan\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                LaporanBalita::class,
+                LaporanLansia::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Pimpinan/Widgets'), for: 'App\\Filament\\Pimpinan\\Widgets')
             ->widgets([

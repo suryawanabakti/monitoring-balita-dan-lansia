@@ -27,6 +27,7 @@ class UserResource extends Resource
     protected static ?string $navigationGroup = 'MANAGEMENT';
     protected static ?string $navigationLabel = 'Wali';
     protected static ?string $pluralLabel = 'Wali';
+    protected static ?string $modelLabel = 'Wali';
 
     public static function getEloquentQuery(): Builder
     {
@@ -36,14 +37,14 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
-                FileUpload::make('avatar_url')->directory('avatars')->avatar()->nullable()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif'])
-                    ->maxSize(10240),
+
                 TextInput::make('name')->required(),
                 TextInput::make('email')->email()->unique(ignoreRecord: true)->required(),
                 Select::make('role')->options([
                     "wali" => "Wali",
-                    "kepala" => "Kepala",
+
                 ])->required()->default('wali'),
                 TextInput::make('password')
                     ->password()
@@ -62,8 +63,9 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(User::where('role', 'wali'))
             ->columns([
-                ImageColumn::make('avatar_url'),
+                // ImageColumn::make('avatar_url'),
                 TextColumn::make('name'),
                 TextColumn::make('email'),
                 TextColumn::make('role'),

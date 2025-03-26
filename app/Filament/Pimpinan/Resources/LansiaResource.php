@@ -1,17 +1,12 @@
 <?php
 
-namespace App\Filament\Wali\Resources;
+namespace App\Filament\Pimpinan\Resources;
 
+use App\Filament\Pimpinan\Resources\LansiaResource\Pages;
+use App\Filament\Pimpinan\Resources\LansiaResource\RelationManagers;
 use App\Filament\Resources\LansiaResource\RelationManagers\RekamkesehatanRelationManager;
-use App\Filament\Wali\Resources\LansiaResource\Pages;
-use App\Filament\Wali\Resources\LansiaResource\RelationManagers;
 use App\Models\Lansia;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -28,13 +23,8 @@ class LansiaResource extends Resource
     protected static ?string $model = Lansia::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'MASTER DATA';
     protected static ?string $navigationLabel = 'Lansia';
-
-    public static function getPluralModelLabel(): string
-    {
-        return 'Lansia'; // Customize the plural label
-    }
     public static function canCreate(): bool
     {
         return false;
@@ -42,6 +32,14 @@ class LansiaResource extends Resource
     public static function canEdit(Model $record): bool
     {
         return false;
+    }
+    public static function canDelete(Model $record): bool
+    {
+        return false;
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -59,22 +57,7 @@ class LansiaResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Lansia')
-                    ->description('Lengkapi data lansia di bawah ini')
-                    ->schema([
-                        TextInput::make('nik')->required(),
-                        TextInput::make('nama')->required(),
-                        DatePicker::make('tgl_lahir')->required(),
-                        Radio::make('jk')->label('Jenis Kelamin')->options([
-                            'L' => 'Laki-laki',
-                            'P' => 'Perempuan',
-                        ])->inline()->inlineLabel(false)->required(),
-                        Textarea::make('alamat')->required(),
-                        Radio::make('status_keluarga')->label('Status Keluarga')->options([
-                            'test1' => 'Test 1',
-                            'test2' => 'Test 2',
-                        ])->inline()->inlineLabel(false)->required(),
-                    ])
+                //
             ]);
     }
 
@@ -87,13 +70,17 @@ class LansiaResource extends Resource
                 TextColumn::make('jk'),
                 TextColumn::make('tgl_lahir'),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ViewAction::make(),
             ])
-            ->bulkActions([]);
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getRelations(): array

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\BalitaResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -24,7 +25,7 @@ class RekamkesehatanRelationManager extends RelationManager
                 Forms\Components\TextInput::make('tinggi_badan')->numeric()->required(),
                 Forms\Components\TextInput::make('tekanan_darah')->numeric()->required(),
                 Forms\Components\TextInput::make('lingkar_kepala')->numeric()->required(),
-                Forms\Components\TextArea::make('catatan'),
+                Textarea::make('catatan'),
             ]);
     }
 

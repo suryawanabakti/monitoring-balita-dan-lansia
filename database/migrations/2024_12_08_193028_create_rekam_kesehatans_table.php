@@ -19,7 +19,13 @@ return new class extends Migration
             $table->float('berat_badan');
             $table->float('tinggi_badan');
             $table->float('tekanan_darah');
-            $table->float('lingkar_kepala');
+            $table->float('lingkar_kepala')->nullable();
+            $table->enum('imt', ['G', 'K', 'N']);
+            $table->integer('p')->nullable();
+            $table->integer('n')->nullable();
+            $table->integer('gds_gdp')->nullable();
+            $table->integer('g3_mata')->nullable();
+            $table->integer('g3_telinga')->nullable();
             $table->text('catatan')->nullable();
             $table->timestamps();
         });

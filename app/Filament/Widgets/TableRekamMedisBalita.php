@@ -2,8 +2,11 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Exports\BalitaExporter;
+use App\Filament\Exports\RekamKesehatanExporter;
 use App\Models\RekamKesehatan;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -16,6 +19,10 @@ class TableRekamMedisBalita extends BaseWidget
             ->query(
                 RekamKesehatan::whereNotNull('balita_id')
             )
+            ->headerActions([
+                // ExportAction::make()->exporter(RekamKesehatanExporter::class)->fileDisk('public')
+
+            ])
             ->columns([
                 TextColumn::make('created_at')->label('Tanggal')->searchable(),
                 TextColumn::make('balita.nama')->label('Balita')->formatStateUsing(fn($record) => "{$record->balita->nama}</br>{$record->balita->nib}")->html()->searchable(),

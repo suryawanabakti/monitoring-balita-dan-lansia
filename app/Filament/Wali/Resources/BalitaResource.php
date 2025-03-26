@@ -2,6 +2,7 @@
 
 namespace App\Filament\Wali\Resources;
 
+use App\Filament\Resources\BalitaResource\RelationManagers\RekamkesehatanRelationManager;
 use App\Filament\Wali\Resources\BalitaResource\Pages;
 use App\Filament\Wali\Resources\BalitaResource\RelationManagers;
 use App\Models\Balita;
@@ -17,6 +18,8 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Model;
 
 class BalitaResource extends Resource
@@ -100,15 +103,26 @@ class BalitaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RekamkesehatanRelationManager::class
         ];
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            TextEntry::make('nama'),
+            TextEntry::make('nib'),
+            TextEntry::make('jk'),
+            TextEntry::make('alamat'),
+            TextEntry::make('user.name')->label('Nama Wali'),
+        ]);
+    }
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListBalitas::route('/'),
             'create' => Pages\CreateBalita::route('/create'),
+            'view' => Pages\ViewBalita::route('/{record}'),
             'edit' => Pages\EditBalita::route('/{record}/edit'),
         ];
     }

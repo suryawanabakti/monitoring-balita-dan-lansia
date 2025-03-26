@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\LansiaResource\RelationManagers;
 
+use Faker\Provider\ar_EG\Text;
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -23,7 +25,17 @@ class RekamkesehatanRelationManager extends RelationManager
                 Forms\Components\TextInput::make('berat_badan')->numeric()->required(),
                 Forms\Components\TextInput::make('tinggi_badan')->numeric()->required(),
                 Forms\Components\TextInput::make('tekanan_darah')->numeric()->required(),
-                Forms\Components\TextArea::make('catatan'),
+                Forms\Components\Select::make('imt')->options([
+                    'G' => 'G',
+                    'K' => 'K',
+                    'N' => 'N',
+                ]),
+                Forms\Components\TextInput::make('p')->numeric(),
+                Forms\Components\TextInput::make('n')->numeric(),
+                Forms\Components\TextInput::make('gds_gdp')->numeric(),
+                Forms\Components\TextInput::make('g3_mata')->numeric(),
+                Forms\Components\TextInput::make('g3_telinga')->numeric(),
+                Textarea::make('catatan')->label('Diagnosa/Keluhan'),
             ]);
     }
 
