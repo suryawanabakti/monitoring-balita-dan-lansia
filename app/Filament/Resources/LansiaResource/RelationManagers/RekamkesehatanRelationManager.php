@@ -22,20 +22,42 @@ class RekamkesehatanRelationManager extends RelationManager
             ->schema([
                 Forms\Components\DatePicker::make('tgl_pemeriksaan')
                     ->required(),
+                Textarea::make('catatan')->label('Diagnosa/Keluhan'),
                 Forms\Components\TextInput::make('berat_badan')->numeric()->required(),
                 Forms\Components\TextInput::make('tinggi_badan')->numeric()->required(),
-                Forms\Components\TextInput::make('tekanan_darah')->numeric()->required(),
-                Forms\Components\Select::make('imt')->options([
-                    'G' => 'G',
-                    'K' => 'K',
-                    'N' => 'N',
+                Forms\Components\Radio::make('rujuk')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
                 ]),
-                Forms\Components\TextInput::make('p')->numeric(),
-                Forms\Components\TextInput::make('n')->numeric(),
-                Forms\Components\TextInput::make('gds_gdp')->numeric(),
-                Forms\Components\TextInput::make('g3_mata')->numeric(),
-                Forms\Components\TextInput::make('g3_telinga')->numeric(),
-                Textarea::make('catatan')->label('Diagnosa/Keluhan'),
+                Forms\Components\Radio::make('hb_kurang')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\Radio::make('kolestrol')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\Radio::make('asam_urat')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\Radio::make('gangguan_ginjal')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\Radio::make('gangguan_pendengaran')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\Radio::make('gangguan_mata')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\Radio::make('gangguan_mental')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+
             ]);
     }
 
@@ -44,10 +66,17 @@ class RekamkesehatanRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('tgl_pemeriksaan')
             ->columns([
-                Tables\Columns\TextColumn::make('tgl_pemeriksaan'),
-                Tables\Columns\TextColumn::make('tinggi_badan'),
-                Tables\Columns\TextColumn::make('tekanan_darah'),
-                Tables\Columns\TextColumn::make('catatan')->wrap(),
+                Tables\Columns\TextColumn::make('catatan')->label('Diagnosa'),
+                Tables\Columns\TextColumn::make('tinggi_badan')->label('TB(cm)'),
+                Tables\Columns\TextColumn::make('berat_badan')->label('BB(kg)'),
+                Tables\Columns\TextColumn::make('rujuk')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('hb_kurang')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('kolestrol')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('asam_urat')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('gangguan_ginjal')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('gangguan_pendengaran')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('gangguan_mata')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('gangguan_mental')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
             ])
             ->filters([
                 //

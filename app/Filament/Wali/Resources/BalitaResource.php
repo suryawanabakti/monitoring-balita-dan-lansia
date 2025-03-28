@@ -40,15 +40,7 @@ class BalitaResource extends Resource
         return 'Balita'; // Customize the plural label
     }
 
-    public static function canEdit(Model $record): bool
-    {
-        return false;
-    }
 
-    public static function canCreate(): bool
-    {
-        return false;
-    }
 
     public static function form(Form $form): Form
     {
@@ -57,7 +49,7 @@ class BalitaResource extends Resource
                 Section::make('Balita')
                     ->description('Lengkapi data balita di bawah ini')
                     ->schema([
-                        TextInput::make('nib')->required(),
+                        TextInput::make('nib')->required()->label('No. kk/bpjs'),
                         TextInput::make('nama')->required(),
                         Radio::make('jk')->label('Jenis Kelamin')->options([
                             'L' => 'Laki-laki',
@@ -65,9 +57,9 @@ class BalitaResource extends Resource
                         ])->inline()->inlineLabel(false)->required(),
                         TextInput::make('nama_orangtua')->required(),
                         Textarea::make('alamat')->required(),
-                        TextInput::make('panjang')->numeric()->required(),
-                        TextInput::make('berat')->numeric()->required(),
-                        TextInput::make('lingkar_kepala')->numeric()->required(),
+                        TextInput::make('nohp')->nullable(),
+                        TextInput::make('bbl')->nullable()->numeric()->label('BBL (kg)'),
+                        TextInput::make('pbl')->nullable()->numeric()->label('PBL (cm)'),
                     ])
             ]);
     }
@@ -92,6 +84,7 @@ class BalitaResource extends Resource
             ->actions([
 
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -111,7 +104,7 @@ class BalitaResource extends Resource
     {
         return $infolist->schema([
             TextEntry::make('nama'),
-            TextEntry::make('nib'),
+            TextEntry::make('nib')->label('No. kk/bpjs'),
             TextEntry::make('jk'),
             TextEntry::make('alamat'),
             TextEntry::make('user.name')->label('Nama Wali'),

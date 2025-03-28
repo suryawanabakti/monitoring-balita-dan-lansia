@@ -21,10 +21,24 @@ class RekamkesehatanRelationManager extends RelationManager
             ->schema([
                 Forms\Components\DatePicker::make('tgl_pemeriksaan')
                     ->required(),
-                Forms\Components\TextInput::make('berat_badan')->numeric()->required(),
-                Forms\Components\TextInput::make('tinggi_badan')->numeric()->required(),
-                Forms\Components\TextInput::make('tekanan_darah')->numeric()->required(),
-                Forms\Components\TextInput::make('lingkar_kepala')->numeric()->required(),
+                Forms\Components\TextInput::make('berat_badan')->numeric()->required()->label('BB (cm)'),
+                Forms\Components\TextInput::make('tppb')->required()->label('TP/PB'),
+                Forms\Components\TextInput::make('lingkar_kepala')->numeric()->required()->label('LILA (cm)'),
+                Forms\Components\Radio::make('asi_ekslusif')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\Radio::make('vit_a')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
+                Forms\Components\TextInput::make('umur')->numeric()->required()->label('Umur'),
+                Forms\Components\TextInput::make('pmt_ke')->required()->label('PMT Ke-'),
+                Forms\Components\TextInput::make('bgt_bgm')->required()->label('BGT/BGM'),
+                Forms\Components\Radio::make('imd')->options([
+                    true => 'Iya',
+                    false => 'Tidak',
+                ]),
                 Textarea::make('catatan'),
             ]);
     }
@@ -35,10 +49,16 @@ class RekamkesehatanRelationManager extends RelationManager
             ->recordTitleAttribute('tgl_pemeriksaan')
             ->columns([
                 Tables\Columns\TextColumn::make('tgl_pemeriksaan'),
-                Tables\Columns\TextColumn::make('tinggi_badan'),
-                Tables\Columns\TextColumn::make('berat_badan'),
-                Tables\Columns\TextColumn::make('tekanan_darah'),
-                Tables\Columns\TextColumn::make('lingkar_kepala'),
+
+                Tables\Columns\TextColumn::make('berat_badan')->label('BB(kg)'),
+                Tables\Columns\TextColumn::make('tppb'),
+                Tables\Columns\TextColumn::make('lingkar_kepala')->label('LILA(cm)'),
+                Tables\Columns\TextColumn::make('asi_ekslusif')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('vit_a')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('umur'),
+                Tables\Columns\TextColumn::make('pmt_ke'),
+                Tables\Columns\TextColumn::make('bgt_bgm'),
+                Tables\Columns\TextColumn::make('imd')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
                 Tables\Columns\TextColumn::make('catatan')->wrap(),
             ])
             ->filters([

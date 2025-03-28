@@ -28,10 +28,8 @@ use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
-
     public function panel(Panel $panel): Panel
     {
-
         return $panel
             ->default()
             ->id('admin')
@@ -41,10 +39,14 @@ class AdminPanelProvider extends PanelProvider
             ->registration()
             ->colors([
                 'primary' => Color::Teal,
+                'danger' => Color::Rose,
+                'gray' => Color::Slate,
+                'info' => Color::Sky,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->sidebarCollapsibleOnDesktop()
-
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -52,12 +54,18 @@ class AdminPanelProvider extends PanelProvider
                 LaporanBalita::class,
                 LaporanLansia::class
             ])
-            // ->brandLogo(asset('logo.jpg'))
+            // ->brandLogo(fn() => view('filament.components.logo'))
             ->brandLogoHeight('3rem')
             ->brandName('Puskesmas Batusura')
-            ->favicon(asset('logo.jpg'))
+            // ->favicon(asset('logo.jpg'))
             ->font('Poppins')
             ->darkMode(false)
+            ->navigationGroups([
+                'Dashboard',
+                'Reports',
+                'Management',
+                'Setting',
+            ])
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Settings')
@@ -67,7 +75,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()
@@ -75,13 +82,11 @@ class AdminPanelProvider extends PanelProvider
                     ->setNavigationLabel('My Profile')
                     ->setNavigationGroup('Setting')
                     ->shouldShowDeleteAccountForm(false)
-
                     ->shouldShowAvatarForm(
                         value: true,
-                        directory: 'avatars', // image will be stored in 'storage/app/public/avatars
-                        rules: 'mimes:jpeg,png|max:1024' //only accept jpeg and png files with a maximum size of 1MB
+                        directory: 'avatars',
+                        rules: 'mimes:jpeg,png|max:1024'
                     )
-                    // ->canAccess(fn () => auth()->user()->id === 1)
                     ->setTitle('my-profile')
                     ->setIcon('heroicon-o-user')
                     ->setSort(8)
@@ -97,9 +102,10 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+
             ->authMiddleware([
                 Authenticate::class,
                 RedirectIfNotAdmin::class
-            ]); // Menyertakan view custom header;
+            ]);
     }
 }

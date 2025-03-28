@@ -53,7 +53,7 @@ class BalitaResource extends Resource
                     ->description('Lengkapi data balita di bawah ini')
                     ->schema([
                         Select::make('user_id')->label('Wali')->options(User::where('role', 'wali')->pluck('name', 'id'))->required(),
-                        TextInput::make('nib')->required(),
+                        TextInput::make('nib')->required()->label('No. kk/bpjs'),
                         TextInput::make('nama')->required(),
                         Radio::make('jk')->label('Jenis Kelamin')->options([
                             'L' => 'Laki-laki',
@@ -62,9 +62,8 @@ class BalitaResource extends Resource
                         TextInput::make('nama_orangtua')->required(),
                         Textarea::make('alamat')->required(),
                         TextInput::make('nohp')->nullable(),
-                        TextInput::make('panjang')->numeric()->required(),
-                        TextInput::make('berat')->numeric()->required(),
-                        TextInput::make('lingkar_kepala')->numeric()->required(),
+                        TextInput::make('bbl')->nullable()->numeric()->label('BBL (kg)'),
+                        TextInput::make('pbl')->nullable()->numeric()->label('PBL (cm)'),
                     ])
             ]);
     }
@@ -73,6 +72,10 @@ class BalitaResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('nib')
+                    ->label('No.kk/bpjs')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('nama')
                     ->label('Nama')
                     ->sortable()

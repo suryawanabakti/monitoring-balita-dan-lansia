@@ -14,11 +14,11 @@ class TableRekamMedisLansia extends BaseWidget
     {
         return $table
             ->query(
-                RekamKesehatan::whereNotNull('lansia_id')
+                RekamKesehatan::with('lansia')->whereNotNull('lansia_id')
             )
             ->columns([
                 TextColumn::make('created_at')->label('Tanggal')->searchable(),
-                TextColumn::make('lansia.nama')->label('Lansia')->formatStateUsing(fn($record) => "{$record->lansia->nama}</br>{$record->lansia->nik}")->html()->searchable(),
+                TextColumn::make('lansia.nama')->label('Lansia'),
                 TextColumn::make('berat_badan')->label('BB')->searchable(),
                 TextColumn::make('tinggi_badan')->label('TB')->searchable(),
                 TextColumn::make('tekanan_darah')->label('TD')->searchable(),

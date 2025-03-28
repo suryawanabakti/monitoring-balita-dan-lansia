@@ -20,9 +20,8 @@ return new class extends Migration
             $table->string('nama_orangtua');
             $table->string('alamat');
             $table->string('nohp')->nullable();
-            $table->integer('panjang');
-            $table->integer('berat');
-            $table->integer('lingkar_kepala');
+            $table->integer('bbl');
+            $table->integer('pbl');
             $table->timestamps();
         });
     }

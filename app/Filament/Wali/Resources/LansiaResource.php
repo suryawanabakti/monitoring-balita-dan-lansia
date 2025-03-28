@@ -35,14 +35,6 @@ class LansiaResource extends Resource
     {
         return 'Lansia'; // Customize the plural label
     }
-    public static function canCreate(): bool
-    {
-        return false;
-    }
-    public static function canEdit(Model $record): bool
-    {
-        return false;
-    }
 
     public static function infolist(Infolist $infolist): Infolist
     {
@@ -70,10 +62,7 @@ class LansiaResource extends Resource
                             'P' => 'Perempuan',
                         ])->inline()->inlineLabel(false)->required(),
                         Textarea::make('alamat')->required(),
-                        Radio::make('status_keluarga')->label('Status Keluarga')->options([
-                            'test1' => 'Test 1',
-                            'test2' => 'Test 2',
-                        ])->inline()->inlineLabel(false)->required(),
+                        Textarea::make('umur')->required(),
                     ])
             ]);
     }
@@ -86,12 +75,14 @@ class LansiaResource extends Resource
                 TextColumn::make('nama')->searchable(),
                 TextColumn::make('jk'),
                 TextColumn::make('tgl_lahir'),
+                TextColumn::make('umur'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([]);
     }
