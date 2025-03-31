@@ -5,7 +5,9 @@ namespace App\Filament\Widgets;
 use App\Filament\Exports\BalitaExporter;
 use App\Filament\Exports\RekamKesehatanExporter;
 use App\Models\RekamKesehatan;
+
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -20,16 +22,21 @@ class TableRekamMedisBalita extends BaseWidget
                 RekamKesehatan::whereNotNull('balita_id')
             )
             ->headerActions([
-                // ExportAction::make()->exporter(RekamKesehatanExporter::class)->fileDisk('public')
-
+                Action::make('export')->url('/export/balita')
             ])
             ->columns([
-                TextColumn::make('created_at')->label('Tanggal')->searchable(),
-                TextColumn::make('balita.nama')->label('Balita')->formatStateUsing(fn($record) => "{$record->balita->nama}</br>{$record->balita->nib}")->html()->searchable(),
-                TextColumn::make('berat_badan')->label('BB')->searchable(),
-                TextColumn::make('tinggi_badan')->label('TB')->searchable(),
-                TextColumn::make('tekanan_darah')->label('TD')->searchable(),
-                TextColumn::make('lingkar_kepala')->label('LK')->searchable(),
+                Tables\Columns\TextColumn::make('tgl_pemeriksaan'),
+
+                Tables\Columns\TextColumn::make('berat_badan')->label('BB(kg)'),
+                Tables\Columns\TextColumn::make('tppb'),
+                Tables\Columns\TextColumn::make('lingkar_kepala')->label('LILA(cm)'),
+                Tables\Columns\TextColumn::make('asi_ekslusif')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('vit_a')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('umur'),
+                Tables\Columns\TextColumn::make('pmt_ke'),
+                Tables\Columns\TextColumn::make('bgt_bgm'),
+                Tables\Columns\TextColumn::make('imd')->formatStateUsing(fn($record) => $record->asi_ekslusif ? "Iya" : "Tidak"),
+                Tables\Columns\TextColumn::make('catatan')->wrap(),
             ]);
     }
 }

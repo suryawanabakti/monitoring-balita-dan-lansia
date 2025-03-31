@@ -29,7 +29,7 @@ return new class extends Migration
             $table->text('catatan')->nullable();
 
             // LANSIA
-            $table->boolean('lansia')->default(false);
+            $table->boolean('rujuk')->default(false);
             $table->boolean('hb_kurang')->default(false);
             $table->boolean('kolestrol')->default(false);
             $table->boolean('asam_urat')->default(false);
