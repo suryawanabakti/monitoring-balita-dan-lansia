@@ -66,6 +66,7 @@ class LansiaResource extends Resource
                         Radio::make('status_keluarga')->label('Status Keluarga')->options([
                             'suami' => 'Suami',
                             'istri' => 'Istri',
+                            'lainnya' => 'Lainnya',
                         ])->inline()->inlineLabel(false)->required(),
                     ])
             ]);

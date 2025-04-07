@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('tgl_lahir');
             $table->enum('jk', ['L', 'P']);
             $table->text('alamat');
-            $table->string('status_keluarga');
+            $table->string('status_keluarga')->nullable();
             $table->timestamps();
         });
     }
