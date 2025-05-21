@@ -29,6 +29,7 @@ class User extends Authenticatable implements HasAvatar
      * @var array<int, string>
      */
     protected $fillable = [
+        'wali_apa',
         'name',
         'email',
         'password',

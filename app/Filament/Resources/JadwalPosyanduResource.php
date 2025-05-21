@@ -7,6 +7,7 @@ use App\Filament\Resources\JadwalPosyanduResource\RelationManagers;
 use App\Models\JadwalPosyandu;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -36,9 +37,14 @@ class JadwalPosyanduResource extends Resource
     {
         return $form
             ->schema([
-                DatePicker::make('tgl_kegiatan'),
-                Textarea::make('lokasi'),
-                Textarea::make('keterangan'),
+                DatePicker::make('tgl_kegiatan')->required(),
+                Textarea::make('lokasi')->required(),
+                Textarea::make('keterangan')->required(),
+                Radio::make('untuk')->options([
+                    'semua' => 'Semua',
+                    'wali balita' => 'Wali balita',
+                    'wali lansia' => 'Wali lansia',
+                ])->inline()->required()
             ]);
     }
 
@@ -48,12 +54,12 @@ class JadwalPosyanduResource extends Resource
             ->columns([
                 TextColumn::make('tgl_kegiatan'),
                 TextColumn::make('lokasi'),
+                TextColumn::make('keterangan'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

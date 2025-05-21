@@ -52,8 +52,8 @@ class BalitaResource extends Resource
                 Section::make('Balita')
                     ->description('Lengkapi data balita di bawah ini')
                     ->schema([
-                        Select::make('user_id')->label('Wali')->options(User::where('role', 'wali')->pluck('name', 'id'))->required(),
-                        TextInput::make('nib')->required()->label('No. kk/bpjs'),
+                        Select::make('user_id')->label('Wali')->options(User::where('role', 'wali')->pluck('name', 'id'))->required()->searchable(),
+                        TextInput::make('nib')->required()->label('No. kk/bpjs')->maxLength(16),
                         TextInput::make('nama')->required(),
                         Radio::make('jk')->label('Jenis Kelamin')->options([
                             'L' => 'Laki-laki',
@@ -62,8 +62,8 @@ class BalitaResource extends Resource
                         TextInput::make('nama_orangtua')->required(),
                         Textarea::make('alamat')->required(),
                         TextInput::make('nohp')->nullable(),
-                        TextInput::make('bbl')->nullable()->numeric()->label('BBL (kg)'),
-                        TextInput::make('pbl')->nullable()->numeric()->label('PBL (cm)'),
+                        TextInput::make('bbl')->nullable()->numeric()->label('BBL (kg)')->helperText('Masukkan berat badan lahir dalam kilogram (kg)')->visible(auth()->user()->role === 'admin'),
+                        TextInput::make('pbl')->nullable()->numeric()->label('PBL (cm)')->helperText('Masukkan Panjang Badan Lahir dalam centimeter (cm)')->visible(auth()->user()->role === 'admin'),
                     ])
             ]);
     }

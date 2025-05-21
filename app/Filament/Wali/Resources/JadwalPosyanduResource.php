@@ -55,17 +55,28 @@ class JadwalPosyanduResource extends Resource
     }
     public static function table(Table $table): Table
     {
+
+        $user = auth()->user();
+        $jadwal = JadwalPosyandu::query();
+        if ($user->wali_apa == 'wali balita') {
+            $jadwal = JadwalPosyandu::where('untuk', 'wali balita')
+                ->orWhere('untuk', 'semua');
+        } elseif ($user->wali_apa == 'wali lansia') {
+            $jadwal = JadwalPosyandu::where('untuk', 'wali lansia')
+                ->orWhere('untuk', 'semua');
+        }
+
         return $table
+            ->query($jadwal)
             ->columns([
                 TextColumn::make('tgl_kegiatan'),
                 TextColumn::make('lokasi')->searchable(),
+                TextColumn::make('keterangan')->searchable(),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-            ])
+            ->actions([])
             ->bulkActions([]);
     }
 

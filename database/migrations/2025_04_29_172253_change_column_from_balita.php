@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jadwal_posyandu', function (Blueprint $table) {
-            $table->id();
-            $table->date('tgl_kegiatan');
-            $table->string('untuk')->default('semua');
-            $table->text('lokasi');
-            $table->text('keterangan');
-            $table->timestamps();
+        Schema::table('balita', function (Blueprint $table) {
+            $table->integer('bbl')->nullable()->change();
+            $table->integer('pbl')->nullable()->change();
         });
     }
 
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jadwal_posyandus');
+        Schema::table('balita', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -21,7 +21,6 @@ Route::get('/export/balita', function () {
 });
 
 Route::get('/export/lansia', function () {
-    return RekamKesehatan::with('lansia')->orderBy('created_at', 'DESC')->get();
     return Excel::download(new RekamKesehatanLansiaExport, 'lansia.xlsx');
 });
 

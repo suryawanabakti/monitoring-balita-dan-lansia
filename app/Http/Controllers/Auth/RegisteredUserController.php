@@ -20,7 +20,12 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $roles = [
+            "wali balita",
+            "wali lansia"
+        ];
+
+        return Inertia::render('Auth/Register', ["roles" => $roles]);
     }
 
     /**
@@ -33,13 +38,14 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults(), 'max_digits:16'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'wali_apa' => $request->role,
         ]);
 
         event(new Registered($user));

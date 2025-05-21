@@ -21,9 +21,9 @@ class RekamkesehatanRelationManager extends RelationManager
             ->schema([
                 Forms\Components\DatePicker::make('tgl_pemeriksaan')
                     ->required(),
-                Forms\Components\TextInput::make('berat_badan')->numeric()->required()->label('BB (cm)'),
-                Forms\Components\TextInput::make('tppb')->required()->label('TP/PB'),
-                Forms\Components\TextInput::make('lingkar_kepala')->numeric()->required()->label('LILA (cm)'),
+                Forms\Components\TextInput::make('berat_badan')->numeric()->required()->label('BB (cm)')->helperText('Masukkan berat badan lahir dalam kilogram (kg)'),
+                Forms\Components\TextInput::make('tppb')->required()->label('TP/PB')->helperText('Masukkan tinggi badan/panjang badan'),
+                Forms\Components\TextInput::make('lingkar_kepala')->numeric()->required()->label('LILA (cm)')->helperText('Masukkan tinggi lingkar lengan atas'),
                 Forms\Components\Radio::make('asi_ekslusif')->options([
                     true => 'Iya',
                     false => 'Tidak',
@@ -33,12 +33,12 @@ class RekamkesehatanRelationManager extends RelationManager
                     false => 'Tidak',
                 ]),
                 Forms\Components\TextInput::make('umur')->numeric()->required()->label('Umur'),
-                Forms\Components\TextInput::make('pmt_ke')->required()->label('PMT Ke-'),
-                Forms\Components\TextInput::make('bgt_bgm')->required()->label('BGT/BGM'),
+                Forms\Components\TextInput::make('pmt_ke')->required()->label('PMT Ke-')->helperText('Masukkan Pemberian Makanan Tambahan'),
+                Forms\Components\TextInput::make('bgt_bgm')->required()->label('BGT/BGM')->helperText('Masukkan bawa garis kuning / bawa garis merah'),
                 Forms\Components\Radio::make('imd')->options([
                     true => 'Iya',
                     false => 'Tidak',
-                ]),
+                ])->helperText('Masukkan Inisiasi menyusui dini'),
                 Textarea::make('catatan'),
             ]);
     }

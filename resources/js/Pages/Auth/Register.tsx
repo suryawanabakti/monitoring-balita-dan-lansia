@@ -4,7 +4,7 @@ import InputError from '@/Components/InputError';
 
 declare var route: (name: string, params?: any) => string;
 
-export default function Register() {
+export default function Register({ roles }: any) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -12,6 +12,7 @@ export default function Register() {
         date_of_birth: '',
         gender: '',
         address: '',
+        role: '', // Tambahan field role
         password: '',
         password_confirmation: '',
         terms: false,
@@ -19,7 +20,6 @@ export default function Register() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route('register'));
     };
 
@@ -40,6 +40,7 @@ export default function Register() {
 
                     <form onSubmit={submit} className="mt-8 space-y-5 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
                         <div className="space-y-4 animate-slideUp">
+
                             {/* Name Field */}
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -47,8 +48,8 @@ export default function Register() {
                                 </label>
                                 <div className="mt-1 relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                                        <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
                                         </svg>
                                     </div>
                                     <input
@@ -65,7 +66,6 @@ export default function Register() {
                                 <InputError message={errors.name} className="mt-2" />
                             </div>
 
-                            {/* Email Field */}
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                     Email
@@ -91,119 +91,50 @@ export default function Register() {
                                 <InputError message={errors.email} className="mt-2" />
                             </div>
 
-                            {/* Phone Field */}
-                            {/* <div className=''>
-                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                                    Nomor Telepon
-                                </label>
-                                <div className="mt-1 relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                        </svg>
-                                    </div>
-                                    <input
-                                        id="phone"
-                                        name="phone"
-                                        type="tel"
-                                        value={data.phone}
-                                        onChange={(e) => setData('phone', e.target.value)}
-                                        required
-                                        className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 sm:text-sm"
-                                        placeholder="Masukkan nomor telepon anda"
-                                    />
-                                </div>
-                                <InputError message={errors.phone} className="mt-2" />
-                            </div> */}
 
-                            {/* Date of Birth Field */}
-                            {/* <div className=''>
-                                <label htmlFor="date_of_birth" className="block text-sm font-medium text-gray-700">
-                                    Tanggal Lahir
-                                </label>
-                                <div className="mt-1 relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <input
-                                        id="date_of_birth"
-                                        name="date_of_birth"
-                                        type="date"
-                                        value={data.date_of_birth}
-                                        onChange={(e) => setData('date_of_birth', e.target.value)}
-                                        required
-                                        className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 sm:text-sm"
-                                    />
-                                </div>
-                                <InputError message={errors.date_of_birth} className="mt-2" />
-                            </div> */}
 
-                            {/* Gender Field */}
-                            {/* <div className=''>
-                                <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-                                    Jenis Kelamin
+                            {/* Role Field */}
+                            <div>
+                                <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                                    Pilih Peran
                                 </label>
                                 <div className="mt-1 relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                                        <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10 3a1 1 0 01.894.553l3 6A1 1 0 0113 11H7a1 1 0 01-.894-1.447l3-6A1 1 0 0110 3z" />
+                                            <path d="M3 13a1 1 0 011-1h12a1 1 0 01.894 1.447l-6 10a1 1 0 01-1.788 0l-6-10A1 1 0 013 13z" />
                                         </svg>
                                     </div>
                                     <select
-                                        id="gender"
-                                        name="gender"
-                                        value={data.gender}
-                                        onChange={(e) => setData('gender', e.target.value)}
+                                        id="role"
+                                        name="role"
+                                        value={data.role}
+                                        onChange={(e) => setData('role', e.target.value)}
                                         required
-                                        className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 sm:text-sm"
+                                        className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 sm:text-sm"
                                     >
-                                        <option value="">Pilih jenis kelamin</option>
-                                        <option value="male">Laki-laki</option>
-                                        <option value="female">Perempuan</option>
+                                        <option value="">-- Pilih Role --</option>
+                                        {roles.map((role: string) => (
+                                            <option key={role} value={role}>{role}</option>
+                                        ))}
                                     </select>
                                 </div>
-                                <InputError message={errors.gender} className="mt-2" />
-                            </div> */}
-
-                            {/* Address Field */}
-                            {/* <div className=''>
-                                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                                    Alamat
-                                </label>
-                                <div className="mt-1 relative">
-                                    <div className="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <textarea
-                                        id="address"
-                                        name="address"
-                                        value={data.address}
-                                        onChange={(e) => setData('address', e.target.value)}
-                                        rows={3}
-                                        className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 transition-all duration-300 sm:text-sm"
-                                        placeholder="Masukkan alamat lengkap anda"
-                                    />
-                                </div>
-                                <InputError message={errors.address} className="mt-2" />
-                            </div> */}
+                                <InputError message={errors.role} className="mt-2" />
+                            </div>
 
                             {/* Password Field */}
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                    Password
-                                </label>
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
                                 <div className="mt-1 relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                                        <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" />
                                         </svg>
                                     </div>
                                     <input
                                         id="password"
+                                  maxLength={16}
+                                        minLength={8}
                                         name="password"
                                         type="password"
                                         value={data.password}
@@ -216,21 +147,21 @@ export default function Register() {
                                 <InputError message={errors.password} className="mt-2" />
                             </div>
 
-                            {/* Password Confirmation Field */}
+                            {/* Password Confirmation */}
                             <div>
-                                <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">
-                                    Konfirmasi Password
-                                </label>
+                                <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">Konfirmasi Password</label>
                                 <div className="mt-1 relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                                        <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" />
                                         </svg>
                                     </div>
                                     <input
                                         id="password_confirmation"
                                         name="password_confirmation"
                                         type="password"
+                                        maxLength={16}
+                                        minLength={8}
                                         value={data.password_confirmation}
                                         onChange={(e) => setData('password_confirmation', e.target.value)}
                                         required
@@ -242,14 +173,14 @@ export default function Register() {
                             </div>
                         </div>
 
-                        {/* Terms and Conditions */}
+                        {/* Terms */}
                         <div className="flex items-center animate-slideUp" style={{ animationDelay: "0.2s" }}>
                             <input
                                 id="terms"
                                 name="terms"
                                 type="checkbox"
                                 checked={data.terms}
-                                onChange={(e:any) => setData('terms', e.target.checked)}
+                                onChange={(e: any) => setData('terms', e.target.checked)}
                                 className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
                                 required
                             />
@@ -259,7 +190,7 @@ export default function Register() {
                             <InputError message={errors.terms} className="mt-2" />
                         </div>
 
-                        {/* Submit Button */}
+                        {/* Submit */}
                         <div className="animate-slideUp" style={{ animationDelay: "0.4s" }}>
                             <button
                                 type="submit"
@@ -291,35 +222,27 @@ export default function Register() {
             {/* Image Section */}
             <div className="hidden md:block w-1/2 bg-teal-600 overflow-hidden animate-fadeIn">
                 <div className="h-full w-full relative">
-                    <img
-                        src="/bg.jpg"
-                        alt="Pelayanan Kesehatan"
-                        className="object-cover h-full w-full animate-slowZoom"
-                    />
+                    <img src="/bg.jpg" alt="Pelayanan Kesehatan" className="object-cover h-full w-full animate-slowZoom" />
                     <div className="absolute inset-0 bg-gradient-to-r from-teal-600/30 to-teal-800/20 flex items-center justify-center">
                         <div className="text-white text-center p-8 max-w-md animate-slideRight">
                             <div className="mb-6 flex justify-center">
                                 <div className="rounded-full bg-white/20 p-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg className="h-12 w-12 text-white" viewBox="0 0 24 24" stroke="currentColor" fill="none">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                     </svg>
                                 </div>
                             </div>
                             <h1 className="text-4xl font-bold mb-4">Bergabunglah Dengan Kami</h1>
-                            <p className="text-lg mb-6">
-                                Daftar sekarang untuk mendapatkan akses ke layanan kesehatan terbaik untuk lansia dan balita di Puskesmas Batusura.
-                            </p>
-                            <div className="grid grid-cols-1 gap-4 mt-8">
-                                <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-                                    <h3 className="font-bold text-xl mb-2">Keuntungan Mendaftar</h3>
-                                    <ul className="text-sm space-y-2 text-left list-disc pl-5">
-                                        <li>Akses mudah ke jadwal pemeriksaan kesehatan</li>
-                                        <li>Pengingat imunisasi dan pemeriksaan rutin</li>
-                                        <li>Konsultasi online dengan tenaga medis</li>
-                                        <li>Akses ke riwayat kesehatan digital</li>
-                                        <li>Informasi program kesehatan terbaru</li>
-                                    </ul>
-                                </div>
+                            <p className="text-lg mb-6">Daftar sekarang untuk mendapatkan akses ke layanan kesehatan terbaik untuk lansia dan balita di Puskesmas Batusura.</p>
+                            <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
+                                <h3 className="font-bold text-xl mb-2">Keuntungan Mendaftar</h3>
+                                <ul className="text-sm list-disc text-left pl-5 space-y-2">
+                                    <li>Akses mudah ke jadwal pemeriksaan kesehatan</li>
+                                    <li>Pengingat imunisasi dan pemeriksaan rutin</li>
+                                    <li>Konsultasi online dengan tenaga medis</li>
+                                    <li>Akses ke riwayat kesehatan digital</li>
+                                    <li>Informasi program kesehatan terbaru</li>
+                                </ul>
                             </div>
                         </div>
                     </div>

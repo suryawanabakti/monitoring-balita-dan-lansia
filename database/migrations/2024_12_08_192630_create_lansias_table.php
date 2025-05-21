@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('nik');
             $table->string('nama');
+            $table->string('umur')->nullable();
             $table->date('tgl_lahir');
             $table->enum('jk', ['L', 'P']);
             $table->text('alamat');

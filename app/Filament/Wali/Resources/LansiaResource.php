@@ -36,6 +36,12 @@ class LansiaResource extends Resource
         return 'Lansia'; // Customize the plural label
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->wali_apa === "wali lansia";
+    }
+
+
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist->schema([
@@ -54,7 +60,7 @@ class LansiaResource extends Resource
                 Section::make('Lansia')
                     ->description('Lengkapi data lansia di bawah ini')
                     ->schema([
-                        TextInput::make('nik')->required(),
+                        TextInput::make('nik')->required()->maxLength(16),
                         TextInput::make('nama')->required(),
                         DatePicker::make('tgl_lahir')->required(),
                         Radio::make('jk')->label('Jenis Kelamin')->options([
@@ -63,13 +69,20 @@ class LansiaResource extends Resource
                         ])->inline()->inlineLabel(false)->required(),
                         Textarea::make('alamat')->required(),
                         Textarea::make('umur')->required(),
+
                     ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
+        $lansias = Lansia::query();
+        if (auth()->user()->role === 'wali') {
+            $lansias = $lansias->where('user_id', auth()->id());
+        }
+
         return $table
+            ->query($lansias)
             ->columns([
                 TextColumn::make('nik')->searchable(),
                 TextColumn::make('nama')->searchable(),

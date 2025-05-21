@@ -40,6 +40,11 @@ class BalitaResource extends Resource
         return 'Balita'; // Customize the plural label
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->wali_apa === "wali balita";
+    }
+
 
 
     public static function form(Form $form): Form
@@ -49,7 +54,7 @@ class BalitaResource extends Resource
                 Section::make('Balita')
                     ->description('Lengkapi data balita di bawah ini')
                     ->schema([
-                        TextInput::make('nib')->required()->label('No. kk/bpjs'),
+                        TextInput::make('nib')->required()->label('No. kk/bpjs')->maxLength(16),
                         TextInput::make('nama')->required(),
                         Radio::make('jk')->label('Jenis Kelamin')->options([
                             'L' => 'Laki-laki',
@@ -58,16 +63,19 @@ class BalitaResource extends Resource
                         TextInput::make('nama_orangtua')->required(),
                         Textarea::make('alamat')->required(),
                         TextInput::make('nohp')->nullable(),
-                        TextInput::make('bbl')->nullable()->numeric()->label('BBL (kg)'),
-                        TextInput::make('pbl')->nullable()->numeric()->label('PBL (cm)'),
+
                     ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
+        $balitas = Balita::query();
+        if (auth()->user()->role === 'wali') {
+            $balitas = $balitas->where('user_id', auth()->id());
+        }
         return $table
-            // ->query()
+            ->query($balitas)
             ->columns([
                 TextColumn::make('nama')
                     ->label('Nama')

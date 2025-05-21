@@ -39,6 +39,8 @@ class LansiaResource extends Resource
     {
         return ['nama', 'nik'];
     }
+
+
     public static function getModelLabel(): string
     {
         return 'Lansia';
@@ -54,8 +56,8 @@ class LansiaResource extends Resource
                 Section::make('Lansia')
                     ->description('Lengkapi data lansia di bawah ini')
                     ->schema([
-                        Select::make('user_id')->label('Wali')->options(User::where('role', 'wali')->pluck('name', 'id'))->required(),
-                        TextInput::make('nik')->required(),
+                        Select::make('user_id')->label('Wali')->options(User::where('role', 'wali')->pluck('name', 'id'))->required()->searchable(),
+                        TextInput::make('nik')->required()->maxLength(16),
                         TextInput::make('nama')->required(),
                         DatePicker::make('tgl_lahir')->required(),
                         Radio::make('jk')->label('Jenis Kelamin')->options([
@@ -63,18 +65,16 @@ class LansiaResource extends Resource
                             'P' => 'Perempuan',
                         ])->inline()->inlineLabel(false)->required(),
                         Textarea::make('alamat')->required(),
-                        Radio::make('status_keluarga')->label('Status Keluarga')->options([
-                            'suami' => 'Suami',
-                            'istri' => 'Istri',
-                            'lainnya' => 'Lainnya',
-                        ])->inline()->inlineLabel(false)->required(),
+
                     ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
+
         return $table
+
             ->columns([
                 TextColumn::make('nik')->searchable(),
                 TextColumn::make('nama')->searchable(),
